@@ -1,6 +1,7 @@
 class Application
 
   @@items = ["Apples","Carrots","Pears"]
+  @@cart = []
 
   def call(env)
     resp = Rack::Response.new
@@ -25,6 +26,14 @@ class Application
       return "#{search_term} is one of our items"
     else
       return "Couldn't find #{search_term}"
+    end
+  end
+
+  def new_cart(env)
+    resp = Rack::Response.new
+    req = Rack::Request.new(env)
+    if req.path.match(/cart/)
+      @@cart << @@items
     end
   end
 end
